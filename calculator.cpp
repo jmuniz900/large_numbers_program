@@ -182,21 +182,21 @@ digit * addNumbers(digit * left, digit * right){ // this function makes numbers 
     digit * tmpLeft = left;
     digit * tmpRight = right;
     digit * resultN = new digit;
-    int result;
-    int remainder;
+    int carry;
     int num;
 
     while(tmpLeft != nullptr && tmpRight != nullptr){
       result = tmpLeft->data + tmpRight->data;
-      num = result / 10;
-      remainder = result % 10;
+      if(carry != 0){
+        result += carry;
+      }
+      carry = result / 10;
+      num = result % 10;
       resultN->data = num;
 
       tmpLeft = tmpLeft->next;
       tmpRight = tmpRight->next;
-      if(remainder != 0){
-
-      }
+      resultN = resultN->next;
     }
     return nullptr;
 }
