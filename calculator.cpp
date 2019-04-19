@@ -141,8 +141,9 @@ char getOperator(ifstream & file){
 void printRecursive(digit * num){
     if (num == nullptr)
     return;
-    printRecursive(num->next);
     cout << num->data;
+    printRecursive(num->next);
+  //  cout << num->data;
 }
 
 //-----------------PROVIDED BY INSTRUCTOR-----------------
