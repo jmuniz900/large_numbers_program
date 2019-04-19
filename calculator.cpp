@@ -11,16 +11,16 @@ class digit
     digit *next = nullptr;
 };
 
-digit * writeNum(ifstream & file);
-int digcmp(digit * left, digit *right);
-char getOperator(ifstream & file);
-void writeNum(digit * num, ofstream & file);
-void deleteNum(digit * num);
-digit * addNumbers(digit * left, digit * right);
-digit * subNumbers(digit * left, digit * right);
-void writeRecursive(digit * num, ofstream & file);
-void setNeg(digit * num);
-void printNum(digit * num);
+digit * writeNum(ifstream & file); //PROVIDED
+int digcmp(digit * left, digit *right); //PROVIDED(?)
+char getOperator(ifstream & file); //PROVIDED
+void writeNum(digit * num, ofstream & file); //PROVIDED
+void deleteNum(digit * num); //PROVIDED
+digit * addNumbers(digit * left, digit * right); //WORK ON
+digit * subNumbers(digit * left, digit * right); //WORK ON
+void writeRecursive(digit * num, ofstream & file);  //PROVIDED
+void setNeg(digit * num); //PROVIDED(?)
+void printNum(digit * num); //PROVIDED
 void printRecursive(digit * num);
 void subtractCarry(digit * head, digit * prev);
 digit * clearLeadingZeros(digit * num);
@@ -179,11 +179,15 @@ void deleteNum(digit * num){
 
 // TODO: Implement function to add 2 numbers stored in 2 linked lists
 digit * addNumbers(digit * left, digit * right){ // this function makes numbers in order.
-    digit * tmpLeft = left;
-    digit * tmpRight = right;
-    digit * resultN = new digit;
-    int carry;
+
+    digit * tmpLeft = left; //I don't think I had to make temporary local variables since
+    digit * tmpRight = right; //the two variables were past in by value.
+    digit * resultLL = new digit;
+    digit * tmpResult = resultLL;
+
+    int carry = 0;
     int num;
+    int result;
 
     while(tmpLeft != nullptr && tmpRight != nullptr){
       result = tmpLeft->data + tmpRight->data;
@@ -192,13 +196,19 @@ digit * addNumbers(digit * left, digit * right){ // this function makes numbers 
       }
       carry = result / 10;
       num = result % 10;
-      resultN->data = num;
+      resultLL->data = num;
 
       tmpLeft = tmpLeft->next;
       tmpRight = tmpRight->next;
-      resultN = resultN->next;
+
+      if(tmpLeft != nullptr && tmpRight != nullptr){
+        resultLL = new digit;
+        resultLL->next = tmpResult;
+        tmpResult = resultLL;
     }
-    return nullptr;
+    }
+    printNum(resultLL);
+    return resultLL;
 }
 
 //-----------------PROVIDED BY INSTRUCTOR-----------------
