@@ -1,5 +1,6 @@
 # large_numbers_calculator_program
 
+
 Objective
 To solidify what we learned about pointers and addresses by implementing linked lists to perform mathematical operations.
 Background
@@ -13,7 +14,7 @@ In this assignment you will read in various computations consisting of 2 numbers
 +
 8888888
 9999999
--
+(minus)
 
 The results for each calculation should be written to the output.txt as they’re computed. This means that output.txt should be opened only once and remain open until all results have been obtained and saved to the file. Below is an example of the output file output.txt:
 11111110
