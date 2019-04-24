@@ -21,9 +21,9 @@ digit * subNumbers(digit * left, digit * right); //WORK ON
 void writeRecursive(digit * num, ofstream & file);  //PROVIDED
 void setNeg(digit * num); //PROVIDED(?)
 void printNum(digit * num); //PROVIDED
-void printRecursive(digit * num);
-void subtractCarry(digit * head, digit * prev);
-digit * clearLeadingZeros(digit * num);
+void printRecursive(digit * num); //PROVIDED
+void subtractCarry(digit * head, digit * prev); //PROVIDED
+digit * clearLeadingZeros(digit * num); //PROVIDED
 
 //-----------------PROVIDED BY INSTRUCTOR-----------------
 int main() {
@@ -182,7 +182,7 @@ void deleteNum(digit * num){
 digit * addNumbers(digit * left, digit * right){ // this function makes numbers in order.
 
     digit * tmpLeft = left; //I don't think I had to make temporary local variables since
-    digit * tmpRight = right; //the two variables were past in by value.
+    digit * tmpRight = right; //the two variables were past in by value + they're pointers
     digit * resultLL = new digit;
     digit * tmpResult = resultLL;
 
@@ -206,7 +206,38 @@ digit * addNumbers(digit * left, digit * right){ // this function makes numbers 
         resultLL = new digit;
         resultLL->next = tmpResult;
         tmpResult = resultLL;
+      }
     }
+
+    while(tmpLeft != nullptr && tmpRight == nullptr){
+      num = tmpLeft->data;
+
+      if(carry != 0){
+        num += carry;
+        carry = 0;
+      }
+
+      resultLL = new digit;
+      resultLL->next = tmpResult;
+      tmpResult = resultLL;
+
+      resultLL->data = num;
+      tmpLeft = tmpLeft->next;
+    }
+    while(tmpLeft == nullptr && tmpRight != nullptr){
+      num = tmpRight->data;
+
+      if(carry != 0){
+        num += carry;
+        carry = 0;
+      }
+
+      resultLL = new digit;
+      resultLL->next = tmpResult;
+      tmpResult = resultLL;
+
+      resultLL->data = num;
+      tmpRight = tmpRight->next;
     }
     printNum(resultLL);
     return resultLL;
@@ -227,7 +258,52 @@ void subtractCarry(digit * head, digit * prev){
 
 // TODO: Implement function to subtract 2 numbers stored in 2 linked lists. Use provided helper functions
 digit * subNumbers(digit * left, digit * right){
-    return nullptr;
+    digit * tmpLeft = left;
+    digit * tmpRight = right;
+    digit * resultList = new digit;
+    digit * tmpResult = resultList;
+
+    int result;
+
+    while(tmpLeft != nullptr && tmpRight != nullptr){
+      if(tmpLeft->data < tmpRight->data){
+        result = (tmpLeft->data + 10) - tmpRight->data;
+        carry = (tmpLeft->data + 10) / 10;
+      }
+      else{
+        result = tmpLeft->data - tmpRight->data;
+      }
+      resultList->data = result;
+
+      if(tmpLeft->next == nullptr && tmpRight->next == nullptr){
+        if(tmpLeft->data < tmpRight->data){
+        setNeg(resultList);
+        }
+      }
+
+      tmpLeft = tmpLeft->next;
+      tmpRight = tmpRight->next;
+
+      if(tmpLeft != nullptr && tmpRight != nullptr){
+      resultList = new digit;
+      resultList->next = tmpResult;
+      tmpResult = resultList;
+      }
+    }
+    while(tmpLeft != nullptr && tmpRight == nullptr){
+      result = tmpLeft->data;
+
+      resultList = new digit;
+      resultList->next = tmpResult;
+      tmpResult = resultList;
+
+      resultList->data = result;
+      tmpLeft = tmpLeft->next;
+
+    }
+
+    printNum(resultList);
+    return resultList;
 }
 
 //-----------------PROVIDED BY INSTRUCTOR-----------------
