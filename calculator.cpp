@@ -239,7 +239,7 @@ digit * addNumbers(digit * left, digit * right){ // this function makes numbers 
       resultLL->data = num;
       tmpRight = tmpRight->next;
     }
-    printNum(resultLL);
+  //  printNum(resultLL);
     return resultLL;
 }
 
