@@ -264,22 +264,25 @@ digit * subNumbers(digit * left, digit * right){
     digit * tmpResult = resultList;
 
     int result;
+    int carry;
 
     while(tmpLeft != nullptr && tmpRight != nullptr){
       if(tmpLeft->data < tmpRight->data){
         result = (tmpLeft->data + 10) - tmpRight->data;
         carry = (tmpLeft->data + 10) / 10;
+        tmpLeft->next->data = tmpLeft->next->data - carry;
+
       }
       else{
         result = tmpLeft->data - tmpRight->data;
       }
       resultList->data = result;
 
-      if(tmpLeft->next == nullptr && tmpRight->next == nullptr){
+    /*  if(tmpLeft->next == nullptr && tmpRight->next == nullptr){
         if(tmpLeft->data < tmpRight->data){
         setNeg(resultList);
         }
-      }
+      } */
 
       tmpLeft = tmpLeft->next;
       tmpRight = tmpRight->next;
@@ -301,8 +304,7 @@ digit * subNumbers(digit * left, digit * right){
       tmpLeft = tmpLeft->next;
 
     }
-
-    printNum(resultList);
+  //  printNum(resultList);
     return resultList;
 }
 
@@ -315,7 +317,7 @@ digit * clearLeadingZeros(digit * num){
         num = next;
         }
         return num;
-    }
+}
 void setNeg(digit * num){
     num->data = -num->data;
 }
